@@ -1,0 +1,16 @@
+{
+  "name": "projeto_accounts",
+  "version": "1.0.0",
+  "description": "Este projeto em Node.js é uma simulação de um sistema bancário acessível via terminal, desenvolvido com o objetivo de consolidar e aplicar os conhecimentos fundamentais adquiridos sobre o ambiente Node.js no decorrer das primeiras aulas do curso do Matheus Battisti.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felipe Lima <ifelipelima.dev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "inquirer": "^8.1.2"
+  }
+}
