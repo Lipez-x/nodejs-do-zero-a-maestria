@@ -1,0 +1,25 @@
+body {
+    background-color: rgba(250, 241, 241, 0.808);
+    padding: 1em;
+}
+
+ul {
+    align-items: center;
+    gap: 0.7Sem;
+}
+
+h1 {
+    color: #b90921;
+}
+
+h2 {
+    color: #960619;
+}
+
+p {
+    color: #4e040e;
+}
+
+a {
+    color: #c90721;
+}
