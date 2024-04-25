@@ -1,0 +1,55 @@
+const { error } = require('console');
+const express = require('express');
+const exphbs = require('express-handlebars');
+const mysql = require('mysql');
+
+const app = express();
+
+app.use(express.urlencoded({
+    extended: true
+})
+)
+
+app.use(express.json())
+
+app.engine('handlebars', exphbs.engine());
+app.set('view engine', 'handlebars');
+
+app.use(express.static('public'))
+
+app.post('/books/insertbooks', (req, res) => {
+    const title = req.body.title
+    const pageqtd = req.body.pagesqtd
+
+    const create = `INSERT INTO books (title, pageqtd) VALUE ('${title}', '${pageqtd}')`
+
+    connection.query(create, function(err) {
+        if (err) {
+            console.error(err);
+        }
+
+        res.redirect('/')
+    })
+})
+
+app.get('/', (req, res) => {
+    res.render('home');
+})
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'nodemysql'
+})
+
+connection.connect(function (err) {
+
+    if (err) {
+        console.error(err);
+    }
+
+    console.log("Conectado ao banco de dados.")
+
+    app.listen(3000)
+})

@@ -1,0 +1,9 @@
+<h1>Livros cadastrados: </h1>
+<div class="books-container">
+    {{#each books}}
+    <div>
+        #{{this.id}} - <span class="bold">{{this.title}}</span> - {{this.pageqtd}} páginas
+    </div>
+    {{/each}}
+    <a href="/">Cadastrar livros</a>
+</div>
