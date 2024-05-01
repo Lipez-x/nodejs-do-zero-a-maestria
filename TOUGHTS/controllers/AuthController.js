@@ -3,16 +3,51 @@ const bcrypt = require('bcryptjs')
 
 module.exports = class AuthController {
 
-    static login (req, res) {
+    static login(req, res) {
         res.render('auth/login')
     }
 
-    static register (req, res) {
+    static async loginPost(req, res) {
+
+        const { email, password } = req.body
+
+        const user = await User.findOne({ where: { email: email } })
+
+        if (!email) {
+            req.flash('message', 'Usuário não encontrado!')
+            res.render('auth/login')
+
+            return
+        }
+
+        const passwordMatch = bcrypt.compareSync(password, user.password)
+
+        if (!passwordMatch) {
+            req.flash('message', 'Senha Incorreta!')
+            res.render('auth/login')
+
+            return
+        }
+
+        req.session.userid = user.id
+        req.flash('message', 'Autenticação realizada com sucesso!')
+
+        req.session.save(() => {
+            res.redirect('/')
+        })
+    }
+
+    static logout(req, res) {
+        req.session.destroy()
+        res.redirect('/login')
+    }
+
+    static register(req, res) {
         res.render('auth/register')
     }
 
-    static async registerPost (req, res) {
-        const {name, email, password, confirmpassword} = req.body
+    static async registerPost(req, res) {
+        const { name, email, password, confirmpassword } = req.body
 
         if (password != confirmpassword) {
             req.flash('message', 'As senhas não conferem, tente novamente!')
@@ -21,7 +56,7 @@ module.exports = class AuthController {
             return
         }
 
-        const checkIfUserExists = await User.findOne({where: { email: email}})
+        const checkIfUserExists = await User.findOne({ where: { email: email } })
 
         if (checkIfUserExists) {
             req.flash('message', 'O email já está em uso!')
@@ -43,7 +78,7 @@ module.exports = class AuthController {
             const userCreated = await User.create(user)
 
             req.session.userid = userCreated.id
-            
+
             req.flash('message', 'Usuário criado com sucesso')
 
             req.session.save(() => {
