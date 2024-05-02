@@ -33,13 +33,6 @@ class Product {
 
     return product;
   }
-
-  static async removeProductById(id) {
-    await connection
-      .db()
-      .collection("products")
-      .findOneAndDelete({ _id: new ObjectId(id) });
-  }
 }
 
 module.exports = Product;
